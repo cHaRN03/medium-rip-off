@@ -1,13 +1,27 @@
 import { SignupInput } from "@orewanaru/medium-common"
 import { useState } from "react"
-import { Link } from "react-router-dom"
-export const Auth = ({type}:{type:"signin" | "signup"}) => {
+import { Link,useNavigate } from "react-router-dom"
+import axios from "axios"
+import { BACKEND_URL } from "../links"
 
+export const Auth = ({type}:{type:"signin" | "signup"}) => {
+  const navigate=useNavigate()
   const[Postinputs,setPostinputs]=useState<SignupInput>({
     username:"",
     password:"",
     name:"",
   })
+
+  async function sendrequest(){
+    try{const result=await axios.post(`${BACKEND_URL}/api/v1/user/${type ==="signin"?"signin":"signup"}`,Postinputs)
+    console.log(result)
+    const jwt=result.data
+    localStorage.setItem("token",jwt)
+    navigate("/blogs")
+    }catch(e){alert("choke")}
+  }
+
+
   return (
     <div className=" h-screen flex justify-center max-w-screen flex-col items-center ">
         
@@ -21,14 +35,15 @@ export const Auth = ({type}:{type:"signin" | "signup"}) => {
             <Link className=" underline opacity-60" to={type === "signup" ? "/signin" : "/signup"} >{type==="signup"?"signin":"signup"}</Link>
         </div>
         <div className="flex flex-col py-2 my-1 pl-9" >
-           <Labelledinput label="Name"  placeholder="Enter Name" onChange={(e)=>{
+           
+           {type==="signup"?<Labelledinput label="Name"  placeholder="Enter Name" onChange={(e)=>{
             setPostinputs(c=>({
               ...c,
               name:e.target.value
             })
 
             
-            )}}/>
+            )}}/>:null}
             <Labelledinput label="Username"  placeholder="Enter Username" onChange={(e)=>{
             setPostinputs(c=>({
               ...c,
@@ -47,7 +62,7 @@ export const Auth = ({type}:{type:"signin" | "signup"}) => {
             
             )}}/>
             <div>{Postinputs.name}</div>
-            <button className=" border border-black w-3/4 mt-6 py-2 rounded-lg bg-black text-white">{type=="signup" ?"Sign Up":"Sign in"}</button>
+            <button onClick={sendrequest} className=" border border-black w-3/4 mt-6 py-2 rounded-lg bg-black text-white">{type=="signup" ?"Sign Up":"Sign in"}</button>
         </div>
 
         
@@ -75,7 +90,7 @@ function Labelledinput ({label,placeholder,onChange,type }:Labelledinputtype) {
           <label htmlFor="username" className="block font-semibold mb-1">{label}</label>
           <input
             onChange={onChange}
-            id="username"
+            
             type={type || "text"}
             className="w-3/4 py-2 px-4 rounded-lg border border-gray-300 shadow-md"
            
