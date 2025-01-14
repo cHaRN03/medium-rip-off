@@ -10,7 +10,7 @@ export const Quotes=()=>{
             <div className=" max-w-3xl flex flex-col justify-center items-center mt-2  ">
                 <div className="max-w-md text-center font-semibold text-2xl">
                 B CHARAN
-                    </div>
+                </div>
             
                 <div className="max-w-md text-center font-semibold text-1xl flex justify-start items-center opacity-60">
                 CEO | ADMIN
