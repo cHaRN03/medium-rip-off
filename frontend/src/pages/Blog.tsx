@@ -1,13 +1,25 @@
-import { BlogCard } from "../Components/BlogCard"
+
+import { FullBlog } from "../Components/FullBlog"
+import { useBlog } from "../hooks"
+import { useParams } from "react-router-dom"
 
 export const Blog = () => {
+  const {id}=useParams()
+  const{loading,blog}=useBlog({
+    id: Number(id || "")
+  })
+
+  if(loading){
+    return <div>
+      loading...
+    </div>
+  }
+
   return (
     <div>
-      <BlogCard
-      authorname="CHeta the goat" date="03/06/03" content="Sure! Here's a 40-word stanza:  Beneath the moon's soft siver glow,  
-        
-        The world rests still in tranquil hue,  
-        A waiting dawn's first golden view."  title="awowoabiopwwadaabpiaspci"/>
+      
+     <FullBlog blog={blog??{title:"goat",content:"safe",id:8,author:{name:"charan"}}}/>z
+     
     </div>
   )
 }

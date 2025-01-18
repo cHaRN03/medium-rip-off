@@ -1,14 +1,17 @@
+import {Link } from "react-router-dom"
 interface Blogcardtypes{
     authorname:string,
     title:string,
     content:string,
     date:string,
+    id:number
 
 
 }
 
-export const BlogCard = ({authorname,title,content,date}:Blogcardtypes) => {
+export const BlogCard = ({authorname,title,content,date,id}:Blogcardtypes) => {
   return (
+    <Link to={`/blog/${id}`}>
     <div className="p-4 border-b border-slate-200 pb-4 w-screen max-w-screen-md cursor-pointer">
         <div className="flex ">
             <div className="flex justify-center flex-row pt-0.5 px-1 ">
@@ -34,6 +37,8 @@ export const BlogCard = ({authorname,title,content,date}:Blogcardtypes) => {
         </div>
         
     </div>
+    </Link>
+    
   )
 }
 

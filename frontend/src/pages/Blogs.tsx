@@ -17,7 +17,7 @@ export const Blogs = () => {
           <div >
             {blogs.map((par)=>{return (
               <BlogCard 
-
+                id={par.id}
               authorname={par.author.name || "anonymous"} date="03/06/03" content={par.content}  title={par.title}/>
               )
             })}
